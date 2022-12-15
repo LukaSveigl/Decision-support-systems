@@ -3,12 +3,13 @@ from MovieData import MovieData
 from Recommender import Recommender
 from scipy.spatial.distance import pdist, squareform
 import pandas as pd
-import numpy as np
-from sklearn.metrics.pairwise import cosine_distances, cosine_similarity
 
 
 class ItemBasedPredictor:
-    def __init__(self, min_values=0, threshold=0):
+    def __init__(self, min_values: int = 0, threshold: int = 0) -> None:
+        """
+        Constructs a new ItemBasedPredictor object that predicts ratings based similarities between items.
+        """
         self.min_values = min_values
         self.threshold = threshold
         pass
@@ -58,7 +59,7 @@ class ItemBasedPredictor:
                 self.df.loc[k, :] = 0
         self.uim = uim
 
-    def predict(self, user_id: int) -> dict[int, int]:
+    def predict(self, user_id: int) -> dict[int, int | float]:
         """
         Predicts the values for data.
 
@@ -85,7 +86,7 @@ class ItemBasedPredictor:
             items[k] = similarity * movie_rating
         return items.copy()
 
-    def similarity(self, p1, p2):
+    def similarity(self, p1: int, p2: int) -> int:
         """
         Finds the similarity between the given movies.
 
@@ -94,7 +95,7 @@ class ItemBasedPredictor:
         """
         return self.df.loc[p1, p2]
 
-    def similar_items(self, item, n):
+    def similar_items(self, item: int, n: int) -> list[int, int]:
         """
         Finds n most similar movies to item.
 

@@ -37,6 +37,10 @@ class Recommender:
             pred = {k: v for k, v in pred.items() if k not in seen_movies}
         return [(k, v) for k, v in sorted(pred.items(), key=lambda item: item[1], reverse=True)][0:n]
 
+    def evaluate(self, test_data, n):
+        pred = self.predictor.predict()
+        pass
+
 
 if __name__ == "__main__":
     md = MovieData('data/movies.dat')
@@ -47,3 +51,8 @@ if __name__ == "__main__":
     rec_items = rec.recommend(user_id=78, n=5, rec_seen=False)
     for idmovie, val in rec_items:
         print("Film: {}, ocena: {}".format(md.get_title(idmovie), val))
+
+    uim_test = UserItemData('data/user_ratedmovies.dat',
+                            min_ratings=200, start_date='2.1.2008')
+    mse, mae, precision, recall, f = rec.evaluate(uim_test, 20)
+    print(mse, mae, precision, recall, f)
