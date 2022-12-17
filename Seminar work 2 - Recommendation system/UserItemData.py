@@ -1,5 +1,4 @@
 import pandas as pd
-from datetime import datetime
 
 
 class UserItemData:
@@ -31,15 +30,13 @@ class UserItemData:
         :param from_date: The lower limit for date filtering.
         """
         format_data = "%d.%m.%Y"
-        limit_date = datetime.strptime(from_date, format_data)
-        indices = []
-        for i in range(self.df.shape[0]):
-            row_date = datetime.strptime(".".join(
-                [str(self.df["date_day"][i]), str(self.df["date_month"][i]), str(self.df["date_year"][i])]), format_data)
-            if row_date >= limit_date:
-                indices.append(i)
-        self.df = self.df.loc[self.df.index[indices]]
-        self.df.reset_index(inplace=True)
+        self.df.rename(columns={"date_year": "year",
+                       "date_month": "month", "date_day": "day"}, inplace=True)
+        self.df["date"] = pd.to_datetime(
+            self.df[["day", "month", "year"]])
+        self.df = self.df[self.df["date"] >=
+                          pd.to_datetime(from_date, format=format_data)]
+        self.df.drop("date", axis=1)
 
     def _limit_to_date(self, to_date: str) -> None:
         """
@@ -48,15 +45,13 @@ class UserItemData:
         :param to_date: The upper limit for date filtering.
         """
         format_data = "%d.%m.%Y"
-        limit_date = datetime.strptime(to_date, format_data)
-        indices = []
-        for i in range(self.df.shape[0]):
-            row_date = datetime.strptime(".".join(
-                [str(self.df["date_day"][i]), str(self.df["date_month"][i]), str(self.df["date_year"][i])]), format_data)
-            if row_date <= limit_date:
-                indices.append(i)
-        self.df = self.df.loc[self.df.index[indices]]
-        self.df.reset_index(inplace=True)
+        self.df.rename(columns={"date_year": "year",
+                       "date_month": "month", "date_day": "day"}, inplace=True)
+        self.df["date"] = pd.to_datetime(
+            self.df[["day", "month", "year"]])
+        self.df = self.df[self.df["date"] <
+                          pd.to_datetime(to_date, format=format_data)]
+        self.df.drop("date", axis=1)
 
     def _limit_ratings(self, min_ratings: int) -> None:
         """
@@ -64,14 +59,9 @@ class UserItemData:
 
         :param to_date: The limit for how many ratings a movie can have.
         """
-        dict_movies = dict()
-        for i in range(self.df.shape[0]):
-            if self.df["movieID"][i] in dict_movies:
-                dict_movies[self.df["movieID"][i]] += 1
-            else:
-                dict_movies[self.df["movieID"][i]] = 1
+        counts = self.df["movieID"].value_counts()
         self.df = self.df[self.df["movieID"].isin(
-            {k: v for k, v in dict_movies.items() if v >= min_ratings}.keys())]
+            counts[counts >= min_ratings].index)]
 
     def read_ratings(self) -> int:
         """

@@ -144,7 +144,7 @@ if __name__ == "__main__":
         print("Movie \"{}\" is similar to \"{}\", similarity: {}".format(
               md.get_title(movie), md.get_title(similarity[1]), similarity[0]))
 
-        # Similar items.
+    # Similar items.
     rec_items = rp.similar_items(4993, 10)
     print('\nFilmi podobni "The Lord of the Rings: The Fellowship of the Ring": ')
     for idmovie, val in rec_items:
