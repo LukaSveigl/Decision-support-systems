@@ -10,7 +10,8 @@ class MovieData:
         :param path: Path to the data file.
         """
         self.path = path
-        self.df = pd.read_table(path, encoding_errors="ignore")
+        self.df = pd.read_csv(path, sep=";", encoding_errors="ignore")
+        print(self.df)
 
     def get_title(self, movie_id: int) -> str:
         """
@@ -19,9 +20,9 @@ class MovieData:
         :param movieID: The movie ID.
         :returns: The movie title.
         """
-        return self.df[self.df["id"] == movie_id]["title"].to_list()[0]
+        return self.df[self.df["ISBN"] == movie_id]["Book-Title"].to_list()[0]
 
 
 if __name__ == "__main__":
-    md = MovieData("data/movies.dat")
-    print(md.get_title(1))
+    md = MovieData("alternative-predictions/data/BX_Books.csv")
+    print(md.get_title("0743203763"))
