@@ -1,7 +1,7 @@
 # 1. Description
 
 This directory contains the implementation of a recommendation system for
-the Movielens dataset. It contains classes for loading the data, different
+the bookcrossing-dataset. It contains classes for loading the data, different
 types of predictors and a recommender which uses a predictor to recommend 
 movies to a specific user.
 

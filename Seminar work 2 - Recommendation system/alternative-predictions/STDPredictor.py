@@ -18,10 +18,10 @@ class STDPredictor:
 
         :param uim: The data.
         """
-        self.uim = {k: 0 for k in uim.df["movieID"]}
+        self.uim = {k: 0 for k in uim.df["isbn"]}
         for k in self.uim.keys():
-            if uim.df[uim.df["movieID"] == k]["rating"].shape[0] > self.n:
-                self.uim[k] = uim.df[uim.df["movieID"] == k]["rating"].std()
+            if uim.df[uim.df["isbn"] == k]["rating"].shape[0] > self.n:
+                self.uim[k] = uim.df[uim.df["isbn"] == k]["rating"].std()
 
     def predict(self, user_id: int) -> dict[int, int]:
         """
@@ -34,11 +34,12 @@ class STDPredictor:
 
 
 if __name__ == "__main__":
-    md = MovieData('data/movies.dat')
-    uim = UserItemData('data/user_ratedmovies.dat')
+    md = MovieData('alternative-predictions/data/BX_Books.csv')
+    uim = UserItemData(
+        'alternative-predictions/data/Preprocessed_data.csv', min_ratings=500)
     ap = STDPredictor(100)
     rec = Recommender(ap)
     rec.fit(uim)
-    rec_items = rec.recommend(user_id=78, n=5, rec_seen=False)
-    for idmovie, val in rec_items:
-        print("Film: {}, ocena: {}".format(md.get_title(idmovie), val))
+    rec_items = rec.recommend(user_id=153662, n=5, rec_seen=False)
+    for idbook, val in rec_items:
+        print("Knjiga: {}, ocena: {}".format(md.get_title(idbook), val))

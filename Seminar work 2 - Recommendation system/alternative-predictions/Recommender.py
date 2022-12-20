@@ -39,7 +39,7 @@ class Recommender:
         """
         self.pred = self.predictor.predict(user_id)
         seen_movies = set(
-            self.uim.df[self.uim.df["userID"] == user_id]["movieID"])
+            self.uim.df[self.uim.df["user_id"] == user_id]["isbn"])
         if not rec_seen:
             pred = {k: v for k, v in self.pred.items() if k not in seen_movies}
         else:
@@ -111,11 +111,12 @@ class Recommender:
 
 
 if __name__ == "__main__":
-    md = MovieData('data/movies.dat')
-    uim = UserItemData('data/user_ratedmovies.dat')
+    md = MovieData('alternative-predictions/data/BX_Books.csv')
+    uim = UserItemData(
+        'alternative-predictions/data/Preprocessed_data.csv', min_ratings=400)
     rp = RandomPredictor(1, 5)
     rec = Recommender(rp)
     rec.fit(uim)
-    rec_items = rec.recommend(user_id=78, n=5, rec_seen=False)
-    for idmovie, val in rec_items:
-        print("Film: {}, ocena: {}".format(md.get_title(idmovie), val))
+    rec_items = rec.recommend(user_id=153662, n=5, rec_seen=False)
+    for idbook, val in rec_items:
+        print("Knjiga: {}, ocena: {}".format(md.get_title(idbook), val))

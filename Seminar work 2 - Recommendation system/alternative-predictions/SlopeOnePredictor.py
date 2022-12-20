@@ -41,12 +41,12 @@ class SlopeOnePredictor:
         # Create matrix of where movie is column, user is row,
         # and cells contain the ratings.
         self.df = uim.df.groupby(
-            ["userID", "movieID"]).size().unstack()
+            ["user_id", "isbn"]).size().unstack()
 
         for col in self.df.columns:
-            indices = uim.df[uim.df["movieID"] == col]["userID"].tolist()
+            indices = uim.df[uim.df["isbn"] == col]["user_id"].tolist()
             self.df.loc[indices, col] = [
-                x for x in uim.df[uim.df["movieID"] == col]["rating"]]
+                x for x in uim.df[uim.df["isbn"] == col]["rating"]]
 
         # Create numpy matrix for faster computation, otherwise the
         # algorithm takes too long.
@@ -93,13 +93,14 @@ class SlopeOnePredictor:
 
 
 if __name__ == "__main__":
-    md = MovieData('data/movies.dat')
-    uim = UserItemData('data/user_ratedmovies.dat', min_ratings=1000)
+    md = MovieData('alternative-predictions/data/BX_Books.csv')
+    uim = UserItemData(
+        'alternative-predictions/data/Preprocessed_data.csv', min_ratings=400)
     rp = SlopeOnePredictor()
     rec = Recommender(rp)
     rec.fit(uim)
 
-    print("Predictions for 78: ")
-    rec_items = rec.recommend(78, n=15, rec_seen=False)
-    for idmovie, val in rec_items:
-        print("Film: {}, ocena: {}".format(md.get_title(idmovie), val))
+    print("\nPredictions for 153662: ")
+    rec_items = rec.recommend(153662, n=15, rec_seen=False)
+    for isbn, val in rec_items:
+        print("Knjiga: {}, ocena: {}".format(md.get_title(isbn), val))

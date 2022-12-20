@@ -11,16 +11,15 @@ class MovieData:
         """
         self.path = path
         self.df = pd.read_csv(path, sep=";", encoding_errors="ignore")
-        print(self.df)
 
-    def get_title(self, movie_id: int) -> str:
+    def get_title(self, isbn: str) -> str:
         """
         Returns the movie title based on the movieID.
 
         :param movieID: The movie ID.
         :returns: The movie title.
         """
-        return self.df[self.df["ISBN"] == movie_id]["Book-Title"].to_list()[0]
+        return self.df[self.df["ISBN"] == isbn]["Book-Title"].to_list()[0]
 
 
 if __name__ == "__main__":

@@ -22,15 +22,15 @@ class ItemBasedPredictor:
         """
         self.uim = uim
         self.df = uim.df.copy()
-        self.df.drop(columns=["date_day", "date_month", "date_year",
-                     "date_hour", "date_minute", "date_second"], inplace=True)
+        # self.df.drop(columns=["date_day", "date_month", "date_year",
+        #             "date_hour", "date_minute", "date_second"], inplace=True)
 
-        self.average_ratings = self.df.groupby("userID")["rating"].mean()
+        self.average_ratings = self.df.groupby("user_id")["rating"].mean()
         self.df["rating"] = (self.df.set_index(
-            ["userID"])["rating"] - self.average_ratings).values
+            ["user_id"])["rating"] - self.average_ratings).values
 
         movie_movie = pd.DataFrame(
-            columns=self.df["movieID"].unique(), index=self.df["movieID"].unique())
+            columns=self.df["isbn"].unique(), index=self.df["isbn"].unique())
 
         npmm = movie_movie.fillna(0).to_numpy()
         npmm = npmm.astype("float64")
@@ -44,23 +44,23 @@ class ItemBasedPredictor:
                 if npmm[i][j] != 0.0:
                     continue
 
-                mid1 = self.df["movieID"].unique()[i]
-                mid2 = self.df["movieID"].unique()[j]
+                mid1 = self.df["isbn"].unique()[i]
+                mid2 = self.df["isbn"].unique()[j]
 
-                common_users = set(self.df[self.df["movieID"] == mid1]["userID"].values).intersection(
-                    set(self.df[self.df["movieID"] == mid2]["userID"].values))
+                common_users = set(self.df[self.df["isbn"] == mid1]["user_id"].values).intersection(
+                    set(self.df[self.df["isbn"] == mid2]["user_id"].values))
                 if len(common_users) == 0 or len(common_users) < self.min_values:
                     continue
 
-                similarity = np.sum(self.df[(self.df["movieID"] == mid1) & (
-                    self.df["userID"].isin(common_users))]["rating"].values * self.df[(self.df["movieID"] == mid2) & (
-                        self.df["userID"].isin(common_users))]["rating"].values)
+                similarity = np.sum(self.df[(self.df["isbn"] == mid1) & (
+                    self.df["user_id"].isin(common_users))]["rating"].values * self.df[(self.df["isbn"] == mid2) & (
+                        self.df["user_id"].isin(common_users))]["rating"].values)
 
-                fis = np.sum(np.power(self.df[(self.df["movieID"] == mid1) & (
-                    self.df["userID"].isin(common_users))]["rating"].values, 2))
+                fis = np.sum(np.power(self.df[(self.df["isbn"] == mid1) & (
+                    self.df["user_id"].isin(common_users))]["rating"].values, 2))
 
-                sis = np.sum(np.power(self.df[(self.df["movieID"] == mid2) & (
-                    self.df["userID"].isin(common_users))]["rating"].values, 2))
+                sis = np.sum(np.power(self.df[(self.df["isbn"] == mid2) & (
+                    self.df["user_id"].isin(common_users))]["rating"].values, 2))
 
                 roots = math.sqrt(fis) * math.sqrt(sis)
                 if roots == 0:
@@ -76,7 +76,7 @@ class ItemBasedPredictor:
                         npmm[i, j] = similarity / roots
                         npmm[j, i] = similarity / roots
         self.df = pd.DataFrame(
-            npmm, columns=self.df["movieID"].unique(), index=self.df["movieID"].unique())
+            npmm, columns=self.df["isbn"].unique(), index=self.df["isbn"].unique())
 
     def predict(self, user_id: int) -> dict[int, int | float]:
         """
@@ -85,19 +85,19 @@ class ItemBasedPredictor:
         :param user_id: The user id.
         :returns: The dict of predictions.
         """
-        items = {k: 0 for k in self.uim.df["movieID"]}
+        items = {k: 0 for k in self.uim.df["isbn"]}
         for k in items.keys():
             prediction = 0
             divisor = 0
             for k1 in items.keys():
-                if k != k1 and len(self.uim.df[(self.uim.df["movieID"] == k1) & (self.uim.df["userID"] == user_id)]) != 0:
+                if k != k1 and len(self.uim.df[(self.uim.df["isbn"] == k1) & (self.uim.df["user_id"] == user_id)]) != 0:
                     similarity = self.df.loc[k, k1]
-                    prediction += similarity * self.uim.df[(self.uim.df["movieID"] == k1) & (
-                        self.uim.df["userID"] == user_id)]["rating"].values[0]
+                    prediction += similarity * self.uim.df[(self.uim.df["isbn"] == k1) & (
+                        self.uim.df["user_id"] == user_id)]["rating"].values[0]
                     divisor += similarity
             if divisor != 0:
                 prediction = (
-                    self.average_ratings[user_id] + (prediction / divisor)) / 2
+                    self.average_ratings[user_id] + (prediction / divisor))
             else:
                 prediction = self.average_ratings[user_id]
             items[k] = prediction
@@ -129,40 +129,28 @@ class ItemBasedPredictor:
 
 
 if __name__ == "__main__":
-    md = MovieData('data/movies.dat')
-    uim = UserItemData('data/user_ratedmovies.dat', min_ratings=1000)
+    md = MovieData('alternative-predictions/data/BX_Books.csv')
+    uim = UserItemData(
+        'alternative-predictions/data/Preprocessed_data.csv', min_ratings=400)
     rp = ItemBasedPredictor()
     rec = Recommender(rp)
     rec.fit(uim)
-    # print(uim.df)
-    print("Podobnost med filmoma 'Men in black'(1580) in 'Ghostbusters'(2716): ",
-          rp.similarity(1580, 2716))
-    print("Podobnost med filmoma 'Men in black'(1580) in 'Schindler's List'(527): ",
-          rp.similarity(1580, 527))
-    print("Podobnost med filmoma 'Men in black'(1580) in 'Independence day'(780): ",
-          rp.similarity(1580, 780))
 
     # Predictions.
-    print("\nPredictions for 78: ")
-    rec_items = rec.recommend(78, n=15, rec_seen=False)
-    for idmovie, val in rec_items:
-        print("Film: {}, ocena: {}".format(md.get_title(idmovie), val))
+    print("\nPredictions for 153662: ")
+    rec_items = rec.recommend(153662, n=15, rec_seen=False)
+    for idbook, val in rec_items:
+        print("Knjiga: {}, ocena: {}".format(md.get_title(idbook), val))
 
     print("\n20 most similar pairs: ")
     # Find highest for each movie.
-    movies = dict.fromkeys(rp.df.columns)
-    for movie in movies.keys():
+    books = dict.fromkeys(rp.df.columns)
+    for book in books.keys():
         # Find max for each movie but exclude itself.
-        similarity = rp.df.loc[rp.df.index != movie, movie].max()
-        similar_movie = rp.df.loc[rp.df.index != movie, movie].idxmax()
-        movies[movie] = (similarity, similar_movie)
+        similarity = rp.df.loc[rp.df.index != book, book].max()
+        similar_movie = rp.df.loc[rp.df.index != book, book].idxmax()
+        books[book] = (similarity, similar_movie)
 
-    for movie, similarity in sorted(movies.items(), key=lambda item: item[1][0], reverse=True)[0:20]:
-        print("Movie \"{}\" is similar to \"{}\", similarity: {}".format(
-              md.get_title(movie), md.get_title(similarity[1]), similarity[0]))
-
-    # Similar items.
-    rec_items = rp.similar_items(4993, 10)
-    print('\nFilmi podobni "The Lord of the Rings: The Fellowship of the Ring": ')
-    for idmovie, val in rec_items:
-        print("Film: {}, ocena: {}".format(md.get_title(idmovie), val))
+    for book, similarity in sorted(books.items(), key=lambda item: item[1][0], reverse=True)[0:20]:
+        print("Book \"{}\" is similar to \"{}\", similarity: {}".format(
+              md.get_title(book), md.get_title(similarity[1]), similarity[0]))

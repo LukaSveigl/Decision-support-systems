@@ -20,7 +20,7 @@ class RandomPredictor:
 
         :param uim: The data.
         """
-        self.uim = {k: 0 for k in uim.df["movieID"]}
+        self.uim = {k: 0 for k in uim.df["isbn"]}
 
     def predict(self, user_id: int) -> dict[int, int]:
         """
@@ -35,12 +35,13 @@ class RandomPredictor:
 
 
 if __name__ == "__main__":
-    md = MovieData('data/movies.dat')
-    uim = UserItemData('data/user_ratedmovies.dat')
-    rp = RandomPredictor(1, 5)
+    md = MovieData('alternative-predictions/data/BX_Books.csv')
+    uim = UserItemData('alternative-predictions/data/Preprocessed_data.csv')
+    rp = RandomPredictor(1, 10)
     rp.fit(uim)
-    pred = rp.predict(78)
-    print(type(pred))
-    items = [1, 3, 20, 50, 100]
+    pred = rp.predict(153662)
+    print(len(pred.keys()))
+    items = ["0195153448", "0002005018",
+             "0060973129", "0374157065", "0393045218"]
     for item in items:
-        print("Film: {}, ocena: {}".format(md.get_title(item), pred[item]))
+        print("Knjiga: {}, ocena: {}".format(md.get_title(item), pred[item]))
