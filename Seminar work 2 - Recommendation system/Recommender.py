@@ -55,59 +55,130 @@ class Recommender:
         :return: The evaluation metrics (mae, rmse, recall, precision, f1)
         """
         # Calculate MAE for predictions and test data.
+        users = set(self.uim.df["userID"])
+        sum_mae = 0
+        reduce = 0
 
-        # Recommend values for each user.
-        """recommended = dict()
-        for u in self.uim.df["userID"]:
-            recommended[u] = dict(self.recommend(
-                user_id=u, n=n, rec_seen=False))
+        user_movies = dict.fromkeys(users)
+        for k in user_movies.keys():
+            user_movies[k] = set(
+                self.uim.df[self.uim.df["userID"] == k]["movieID"].values)
 
-        # Calculate MAE
-        mae_sums = 0
-        user_count = len(recommended.keys())
+        for u in users:
+            # Predict values for user.
+            self.pred = self.predictor.predict(u)
 
-        averages = {k: np.mean(self.uim.df[self.uim.df["movieID"] == k]
-                    ["rating"]) for k in self.uim.df["movieID"]}
+            user_movies_in_test = set(
+                test_data.df[test_data.df["userID"] == u]["movieID"].values)
 
-        for u in recommended.keys():
-            movies = {k: averages[k] for k in recommended[u].keys()}
+            predicted_movies = set(self.pred.keys())
 
-            a = np.array([v for _, v in sorted(
-                recommended[u].items(), key=lambda item: item[0])])
-            b = np.array([v for _, v in sorted(
-                movies.items(), key=lambda item: item[0])])
+            intersected_movies = predicted_movies.intersection(
+                user_movies_in_test)
 
-            if len(a) < 1 or len(b) < 1:
+            if len(intersected_movies) == 0:
+                reduce += 1
                 continue
 
-            mae_sums += np.mean(np.absolute(np.subtract(a, b)))
+            td = dict.fromkeys(intersected_movies)
+            for k in td.keys():
+                td[k] = np.absolute(
+                    self.pred[k] - test_data.df[test_data.df["movieID"] == k]["rating"].values[0])
 
-        mae_res = mae_sums / user_count
-        # return 0, 0, 0, 0, 0
+            sum_mae += np.mean(np.array(list(td.values())))
 
-        # Calculate RMSE
-        mse_sums = 0
-        for u in recommended.keys():
-            movies = {k: averages[k] for k in recommended[u].keys()}
+        mae_r = sum_mae / (len(users) - reduce)
 
-            a = np.array([v for _, v in sorted(
-                recommended[u].items(), key=lambda item: item[0])])
-            b = np.array([v for _, v in sorted(
-                movies.items(), key=lambda item: item[0])])
+        sum_rmse = 0
+        reduce = 0
 
-            if len(a) < 1 or len(b) < 1:
+        for u in users:
+            self.pred = self.predictor.predict(u)
+
+            user_movies_in_test = set(
+                test_data.df[test_data.df["userID"] == u]["movieID"].values)
+
+            predicted_movies = set(self.pred.keys())
+
+            intersected_movies = predicted_movies.intersection(
+                user_movies_in_test)
+
+            if len(intersected_movies) == 0:
+                reduce += 1
                 continue
 
-            mse_sums += np.mean(np.square(np.subtract(a, b)))
-            # mse_sums += mse(a, b)  # np.mean(np.absolute(np.subtract(a, b)))
-        mse_res = mse_sums / user_count
-        # Calculate recall
+            td = dict.fromkeys(intersected_movies)
+            for k in td.keys():
+                td[k] = np.square(
+                    test_data.df[test_data.df["movieID"] == k]["rating"].values[0] - self.pred[k])
 
-        # Calculate precision
+            sum_rmse += np.sqrt(np.mean(np.array(list(td.values()))))
 
-        # Calculate f1"""
+        rmse_r = sum_rmse / (len(users) - reduce)
 
-        return 0, 0, 0, 0, 0
+        # Precision
+        sum_precision = 0
+        reduce = 0
+
+        for u in users:
+            self.rec = self.recommend(user_id=u, n=n, rec_seen=False)
+
+            mean_rating = test_data.df[test_data.df["userID"]
+                                       == u]["rating"].mean()
+
+            user_movies = set(movie for movie in test_data.df[(test_data.df["userID"] == u) & (
+                test_data.df["rating"] >= mean_rating)]["movieID"].values)
+
+            if len(user_movies) == 0:
+                reduce += 1
+                continue
+
+            rec_movies = set(movie for movie, rating in self.rec)
+
+            TP = len(user_movies.intersection(rec_movies))
+            FP = len(rec_movies.difference(user_movies))
+
+            if TP == 0 and FP == 0:
+                reduce += 1
+                continue
+
+            sum_precision += TP / (TP + FP)
+
+        precision_r = sum_precision / (len(users) - reduce)
+
+        # Recall
+        sum_recall = 0
+        reduce = 0
+
+        for u in users:
+            self.rec = self.recommend(user_id=u, n=n, rec_seen=False)
+
+            mean_rating = test_data.df[test_data.df["userID"]
+                                       == u]["rating"].mean()
+
+            user_movies = set(movie for movie in test_data.df[(test_data.df["userID"] == u) & (
+                test_data.df["rating"] >= mean_rating)]["movieID"].values)
+
+            if len(user_movies) == 0:
+                reduce += 1
+                continue
+
+            rec_movies = set(movie for movie, rating in self.rec)
+
+            TP = len(user_movies.intersection(rec_movies))
+            FN = len(user_movies.difference(rec_movies))
+
+            if TP == 0 and FN == 0:
+                reduce += 1
+                continue
+
+            sum_recall += TP / (TP + FN)
+        recall_r = sum_recall / (len(users) - reduce)
+
+        # F1
+        f1_r = 2 * (precision_r * recall_r) / (precision_r + recall_r)
+
+        return rmse_r, mae_r, precision_r, recall_r, f1_r
 
 
 if __name__ == "__main__":
