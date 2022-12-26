@@ -89,6 +89,7 @@ class Recommender:
 
         mae_r = sum_mae / (len(users) - reduce)
 
+        # RMSE
         sum_rmse = 0
         reduce = 0
 
@@ -127,7 +128,7 @@ class Recommender:
                                        == u]["rating"].mean()
 
             user_movies = set(movie for movie in test_data.df[(test_data.df["userID"] == u) & (
-                test_data.df["rating"] >= mean_rating)]["movieID"].values)
+                test_data.df["rating"] > mean_rating)]["movieID"].values)
 
             if len(user_movies) == 0:
                 reduce += 1
@@ -157,7 +158,7 @@ class Recommender:
                                        == u]["rating"].mean()
 
             user_movies = set(movie for movie in test_data.df[(test_data.df["userID"] == u) & (
-                test_data.df["rating"] >= mean_rating)]["movieID"].values)
+                test_data.df["rating"] > mean_rating)]["movieID"].values)
 
             if len(user_movies) == 0:
                 reduce += 1
