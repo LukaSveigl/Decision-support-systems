@@ -25,3 +25,7 @@ class MovieData:
 if __name__ == "__main__":
     md = MovieData("data/movies.dat")
     print(md.get_title(1))
+
+# Results:
+#
+# Toy story

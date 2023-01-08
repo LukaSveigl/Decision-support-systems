@@ -44,3 +44,12 @@ if __name__ == "__main__":
     items = [1, 3, 20, 50, 100]
     for item in items:
         print("Film: {}, ocena: {}".format(md.get_title(item), pred[item]))
+
+# Results
+#
+# <class 'dict'>
+# Film: Toy story, ocena: 4
+# Film: Grumpy Old Men, ocena: 4
+# Film: Money Train, ocena: 4
+# Film: The Usual Suspects, ocena: 2
+# Film: City Hall, ocena: 5

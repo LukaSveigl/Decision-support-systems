@@ -79,3 +79,9 @@ if __name__ == "__main__":
     uim = UserItemData("data/user_ratedmovies.dat",
                        from_date="12.1.2007", to_date="16.2.2008", min_ratings=100)
     print(uim.read_ratings())
+
+# Results:
+#
+# 855598
+# 73584
+#
