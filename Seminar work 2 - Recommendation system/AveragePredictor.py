@@ -46,3 +46,11 @@ if __name__ == "__main__":
     rec_items = rec.recommend(user_id=78, n=5, rec_seen=False)
     for idmovie, val in rec_items:
         print("Film: {}, ocena: {}".format(md.get_title(idmovie), val))
+
+# Results:
+#
+# Film: The Usual Suspects, ocena: 4.225944245560473
+# Film: The Godfather: Part II, ocena: 4.146907937910189
+# Film: Cidade de Deus, ocena: 4.116538340205236
+# Film: The Dark Knight, ocena: 4.10413904093503
+# Film: 12 Angry Men, ocena: 4.103639627096175

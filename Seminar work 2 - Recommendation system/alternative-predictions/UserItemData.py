@@ -47,3 +47,8 @@ if __name__ == "__main__":
     uim = UserItemData(
         "alternative-predictions/data/Preprocessed_data.csv", min_ratings=500)
     print(uim.read_ratings())
+
+# Results:
+#
+# 1031175
+# 13993

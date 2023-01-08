@@ -63,3 +63,17 @@ if __name__ == "__main__":
     for idmovie, val in rec_items:
         print("Film: {}, ocena: {}".format(md.get_title(idmovie), val))
     pass
+
+# Results:
+#
+# Predictions for myself:
+# Film: Batman Begins, ocena: 4.105882352941177
+# Film: Ocean's Eleven, ocena: 4.105882352941176
+# Film: The Fugitive, ocena: 4.105882352941176
+# Film: The Bourne Identity, ocena: 4.105882352941176
+# Film: Monsters, Inc., ocena: 4.072070109345024
+# Film: Die Hard, ocena: 4.064341903890307
+# Film: Shichinin no samurai, ocena: 4.015034769975135
+# Film: The Godfather, ocena: 3.9998236518482897
+# Film: Alien, ocena: 3.9965629615528675
+# Film: Memento, ocena: 3.995914773075207

@@ -104,3 +104,18 @@ if __name__ == "__main__":
     rec_items = rec.recommend(153662, n=15, rec_seen=False)
     for isbn, val in rec_items:
         print("Knjiga: {}, ocena: {}".format(md.get_title(isbn), val))
+
+# Results:
+#
+# Predictions for 153662:
+# Knjiga: A Prayer for Owen Meany, ocena: 9.612962962962964
+# Knjiga: The Da Vinci Code, ocena: 9.603739316239315
+# Knjiga: Angels & Demons, ocena: 9.33042328042328
+# Knjiga: Jurassic Park, ocena: 8.748484848484848
+# Knjiga: The Poisonwood Bible: A Novel, ocena: 8.625641025641025
+# Knjiga: The Nanny Diaries: A Novel, ocena: 8.579629629629629
+# Knjiga: The Testament, ocena: 8.471560846560847
+# Knjiga: The Firm, ocena: 8.45352564102564
+# Knjiga: She's Come Undone (Oprah's Book Club (Paperback)), ocena: 8.431944444444445
+# Knjiga: She's Come Undone (Oprah's Book Club), ocena: 8.277050264550263
+# Knjiga: The Horse Whisperer, ocena: 8.011904761904761

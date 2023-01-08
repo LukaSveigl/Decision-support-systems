@@ -43,3 +43,9 @@ if __name__ == "__main__":
     rec_items = rec.recommend(user_id=153662, n=5, rec_seen=False)
     for idbook, val in rec_items:
         print("Knjiga: {}, ocena: {}".format(md.get_title(idbook), val))
+
+# Results:
+#
+# Knjiga: The Da Vinci Code, ocena: 4.376584616254901
+# Knjiga: Angels & Demons, ocena: 4.182695518980329
+# Knjiga: The Firm, ocena: 3.973628843304148

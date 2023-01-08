@@ -166,3 +166,60 @@ if __name__ == "__main__":
     print('\nFilmi podobni "The Lord of the Rings: The Fellowship of the Ring": ')
     for idmovie, val in rec_items:
         print("Film: {}, ocena: {}".format(md.get_title(idmovie), val))
+
+# Results:
+#
+# Podobnost med filmoma 'Men in black'(1580) in 'Ghostbusters'(2716):  0.23395523176756633
+# Podobnost med filmoma 'Men in black'(1580) in 'Schindler's List'(527):  0.0
+# Podobnost med filmoma 'Men in black'(1580) in 'Independence day'(780):  0.42466125844687624
+#
+# Predictions for 78:
+# Film: Shichinin no samurai, ocena: 4.1604255346899635
+# Film: The Usual Suspects, ocena: 4.1598990035688015
+# Film: The Silence of the Lambs, ocena: 4.150210791271142
+# Film: Sin City, ocena: 4.121901722984434
+# Film: Monsters, Inc., ocena: 4.0913487080066435
+# Film: The Incredibles, ocena: 4.0861074311757575
+# Film: The Lord of the Rings: The Fellowship of the Ring, ocena: 4.058954193209058
+# Film: Batman Begins, ocena: 4.055765042884983
+# Film: Die Hard, ocena: 4.045515940651294
+# Film: Rain Man, ocena: 4.018325761014159
+# Film: The Lord of the Rings: The Return of the King, ocena: 3.99267686416339
+# Film: A Beautiful Mind, ocena: 3.9901293845673034
+# Film: Good Will Hunting, ocena: 3.987198542996294
+# Film: The Lord of the Rings: The Two Towers, ocena: 3.9532962920826806
+# Film: Indiana Jones and the Last Crusade, ocena: 3.8810463877243455
+#
+# 20 most similar pairs:
+# Movie "The Lord of the Rings: The Two Towers" is similar to "The Lord of the Rings: The Return of the King", similarity: 0.8439842148481417
+# Movie "The Lord of the Rings: The Return of the King" is similar to "The Lord of the Rings: The Two Towers", similarity: 0.8439842148481417
+# Movie "The Lord of the Rings: The Fellowship of the Ring" is similar to "The Lord of the Rings: The Two Towers", similarity: 0.8231885401761888
+# Movie "Kill Bill: Vol. 2" is similar to "Kill Bill: Vol. 2", similarity: 0.7372340224381029
+# Movie "Kill Bill: Vol. 2" is similar to "Kill Bill: Vol. 2", similarity: 0.7372340224381029
+# Movie "Star Wars" is similar to "Star Wars: Episode V - The Empire Strikes Back", similarity: 0.7021321132220318
+# Movie "Star Wars: Episode V - The Empire Strikes Back" is similar to "Star Wars", similarity: 0.7021321132220318
+# Movie "Ace Ventura: Pet Detective" is similar to "The Mask", similarity: 0.6616471778494046
+# Movie "The Mask" is similar to "Ace Ventura: Pet Detective", similarity: 0.6616471778494046
+# Movie "Star Wars: Episode VI - Return of the Jedi" is similar to "Star Wars: Episode V - The Empire Strikes Back", similarity: 0.5992253753778948
+# Movie "Independence Day" is similar to "Star Wars: Episode I - The Phantom Menace", similarity: 0.5610426219249997
+# Movie "Star Wars: Episode I - The Phantom Menace" is similar to "Independence Day", similarity: 0.5610426219249997
+# Movie "Austin Powers: The Spy Who Shagged Me" is similar to "Ace Ventura: Pet Detective", similarity: 0.5546511205201551
+# Movie "Speed" is similar to "Pretty Woman", similarity: 0.5452283115904596
+# Movie "Pretty Woman" is similar to "Speed", similarity: 0.5452283115904596
+# Movie "Mrs. Doubtfire" is similar to "The Mask", similarity: 0.5398021259282235
+# Movie "The Matrix Reloaded" is similar to "Star Wars: Episode I - The Phantom Menace", similarity: 0.539553095856011
+# Movie "Pulp Fiction" is similar to "Reservoir Dogs", similarity: 0.5325845218198639
+# Movie "Reservoir Dogs" is similar to "Pulp Fiction", similarity: 0.5325845218198639
+# Movie "The Shawshank Redemption" is similar to "The Usual Suspects", similarity: 0.517724533955058
+#
+# Filmi podobni "The Lord of the Rings: The Fellowship of the Ring":
+# Film: The Lord of the Rings: The Two Towers, ocena: 0.8231885401761888
+# Film: The Lord of the Rings: The Return of the King, ocena: 0.8079374897442496
+# Film: Star Wars: Episode V - The Empire Strikes Back, ocena: 0.2396194307349645
+# Film: Star Wars, ocena: 0.2196558652707407
+# Film: The Matrix, ocena: 0.2151555270688023
+# Film: Raiders of the Lost Ark, ocena: 0.19944276706345015
+# Film: The Usual Suspects, ocena: 0.18321188451910753
+# Film: Blade Runner, ocena: 0.16399681315410275
+# Film: Schindler's List, ocena: 0.16105905138148702
+# Film: Monty Python and the Holy Grail, ocena: 0.15780453798519137

@@ -10,7 +10,6 @@ from sklearn.metrics import f1_score as f1
 import numpy as np
 
 
-
 class Recommender:
     def __init__(self, predictor: RandomPredictor) -> None:
         """
@@ -183,8 +182,6 @@ class Recommender:
         return rmse_r, mae_r, precision_r, recall_r, f1_r
 
 
-
-
 if __name__ == "__main__":
     md = MovieData('alternative-predictions/data/BX_Books.csv')
     uim = UserItemData(
@@ -195,3 +192,11 @@ if __name__ == "__main__":
     rec_items = rec.recommend(user_id=153662, n=5, rec_seen=False)
     for idbook, val in rec_items:
         print("Knjiga: {}, ocena: {}".format(md.get_title(idbook), val))
+
+# Results:
+#
+# Knjiga: The Testament, ocena: 5
+# Knjiga: She's Come Undone (Oprah's Book Club), ocena: 5
+# Knjiga: She's Come Undone (Oprah's Book Club (Paperback)), ocena: 5
+# Knjiga: A Prayer for Owen Meany, ocena: 5
+# Knjiga: The Horse Whisperer, ocena: 4

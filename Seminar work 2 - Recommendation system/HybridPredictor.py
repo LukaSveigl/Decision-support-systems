@@ -63,3 +63,22 @@ if __name__ == "__main__":
     rec_items = rec.recommend(78, n=15, rec_seen=False)
     for idmovie, val in rec_items:
         print("Film: {}, ocena: {}".format(md.get_title(idmovie), val))
+
+# Results:
+#
+# Predictions for 78: 
+# Film: The Lord of the Rings: The Fellowship of the Ring, ocena: 4.222124268484733
+# Film: The Lord of the Rings: The Two Towers, ocena: 4.066243609686811
+# Film: The Lord of the Rings: The Return of the King, ocena: 3.9597929670299936
+# Film: The Silence of the Lambs, ocena: 3.9490960158900186
+# Film: Shrek, ocena: 3.6919636926785664
+# Film: The Usual Suspects, ocena: 3.58663609727359
+# Film: Gladiator, ocena: 3.495346786685855
+# Film: Shichinin no samurai, ocena: 3.4946176822899915
+# Film: Pirates of the Caribbean: The Curse of the Black Pearl, ocena: 3.4398312632377426
+# Film: Men in Black, ocena: 3.3549544441215224
+# Film: Toy story, ocena: 3.3447138198251074
+# Film: Finding Nemo, ocena: 3.3433742383774194
+# Film: The Incredibles, ocena: 3.3410594623961196
+# Film: Batman Begins, ocena: 3.3170050579133057
+# Film: A Beautiful Mind, ocena: 3.244104578274035

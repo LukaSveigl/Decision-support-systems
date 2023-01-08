@@ -154,3 +154,40 @@ if __name__ == "__main__":
     for book, similarity in sorted(books.items(), key=lambda item: item[1][0], reverse=True)[0:20]:
         print("Book \"{}\" is similar to \"{}\", similarity: {}".format(
               md.get_title(book), md.get_title(similarity[1]), similarity[0]))
+
+# Results:
+#
+# Predictions for 153662:
+# Knjiga: The Horse Whisperer, ocena: 6.1858072477346475
+# Knjiga: The Firm, ocena: 5.297892926906104
+# Knjiga: The Da Vinci Code, ocena: 5.009295335878882
+# Knjiga: The Poisonwood Bible: A Novel, ocena: 4.821153420093065
+# Knjiga: She's Come Undone (Oprah's Book Club), ocena: 3.963834119766654
+# Knjiga: The Testament, ocena: 3.6232530146796655
+# Knjiga: She's Come Undone (Oprah's Book Club (Paperback)), ocena: 3.207193317498997
+# Knjiga: The Nanny Diaries: A Novel, ocena: 2.934076516132335
+# Knjiga: Jurassic Park, ocena: 2.8997207658329183
+# Knjiga: Angels & Demons, ocena: 2.0292407612886265
+# Knjiga: A Prayer for Owen Meany, ocena: 1.8928571428571428
+#
+# 20 most similar pairs:
+# Book "Little Altars Everywhere: A Novel" is similar to "The Nanny Diaries: A Novel", similarity: 0.46304544906230805
+# Book "The Nanny Diaries: A Novel" is similar to "Little Altars Everywhere: A Novel", similarity: 0.46304544906230805
+# Book "The Catcher in the Rye" is similar to "Life of Pi", similarity: 0.3966352489589352
+# Book "Life of Pi" is similar to "The Catcher in the Rye", similarity: 0.3966352489589352
+# Book "Timeline" is similar to "The Joy Luck Club", similarity: 0.3866294976966082
+# Book "The Joy Luck Club" is similar to "Timeline", similarity: 0.3866294976966082
+# Book "The Firm" is similar to "The Nanny Diaries: A Novel", similarity: 0.3626614344317186
+# Book "Jurassic Park" is similar to "Life of Pi", similarity: 0.3494117809775428
+# Book "The Runaway Jury" is similar to "Life of Pi", similarity: 0.34247582037004926
+# Book "She's Come Undone (Oprah's Book Club (Paperback))" is similar to "A Prayer for Owen Meany", similarity: 0.3257235267990078
+# Book "A Prayer for Owen Meany" is similar to "She's Come Undone (Oprah's Book Club (Paperback))", similarity: 0.3257235267990078
+# Book "The Five People You Meet in Heaven" is similar to "A Painted House", similarity: 0.3220240613099573
+# Book "A Painted House" is similar to "The Five People You Meet in Heaven", similarity: 0.3220240613099573
+# Book "Good in Bed" is similar to "The Catcher in the Rye", similarity: 0.3178231561463235
+# Book "The Poisonwood Bible: A Novel" is similar to "The Catcher in the Rye", similarity: 0.3096790142153704
+# Book "The No. 1 Ladies' Detective Agency (Today Show Book Club #8)" is similar to "Timeline", similarity: 0.3059778613183301
+# Book "The Summons" is similar to "The Five People You Meet in Heaven", similarity: 0.29714819596081776
+# Book "Harry Potter and the Sorcerer's Stone (Harry Potter (Paperback))" is similar to "The Poisonwood Bible: A Novel", similarity: 0.2970368770273955
+# Book "Interview with the Vampire" is similar to "The Nanny Diaries: A Novel", similarity: 0.29359942753633855
+# Book "The Pelican Brief" is similar to "The Catcher in the Rye", similarity: 0.28548035828631096

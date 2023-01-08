@@ -37,3 +37,11 @@ if __name__ == "__main__":
     rec_items = rec.recommend(user_id=78, n=5, rec_seen=False)
     for idmovie, val in rec_items:
         print("Film: {}, ocena: {}".format(md.get_title(idmovie), val))
+
+# Results:
+#
+# Film: The Lord of the Rings: The Fellowship of the Ring, ocena: 1576
+# Film: The Lord of the Rings: The Two Towers, ocena: 1528
+# Film: The Lord of the Rings: The Return of the King, ocena: 1457
+# Film: The Silence of the Lambs, ocena: 1431
+# Film: Shrek, ocena: 1404

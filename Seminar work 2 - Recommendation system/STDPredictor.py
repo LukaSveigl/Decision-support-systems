@@ -42,3 +42,11 @@ if __name__ == "__main__":
     rec_items = rec.recommend(user_id=78, n=5, rec_seen=False)
     for idmovie, val in rec_items:
         print("Film: {}, ocena: {}".format(md.get_title(idmovie), val))
+
+# Results:
+#
+# Film: Plan 9 from Outer Space, ocena: 1.3449520951495717
+# Film: The Passion of the Christ, ocena: 1.2814934595257348
+# Film: The Texas Chainsaw Massacre, ocena: 1.235349321908819
+# Film: Jackass Number Two, ocena: 1.2189769976366682
+# Film: White Chicks, ocena: 1.1899581424297316

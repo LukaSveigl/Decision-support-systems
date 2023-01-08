@@ -191,3 +191,11 @@ if __name__ == "__main__":
     rec_items = rec.recommend(user_id=78, n=5, rec_seen=False)
     for idmovie, val in rec_items:
         print("Film: {}, ocena: {}".format(md.get_title(idmovie), val))
+
+# Results:
+#
+# Film: Desperado, ocena: 5
+# Film: The Fifth Element, ocena: 5
+# Film: South Park: Bigger Longer & Uncut, ocena: 5
+# Film: Death Becomes Her, ocena: 5
+# Film: The Lord of the Rings: The Two Towers, ocena: 5

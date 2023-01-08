@@ -119,3 +119,22 @@ if __name__ == "__main__":
 
     # mfp.visualize_first_10()
     # mfp.visualize_matrix_decompose()
+
+# Results:
+#
+# Predictions for 78:
+# Film: Men in Black, ocena: 1.8204205103868067
+# Film: Spider-Man, ocena: 1.5347774658228888
+# Film: Toy story, ocena: 1.390759056915183
+# Film: Titanic, ocena: 1.3640562754303271
+# Film: Austin Powers: The Spy Who Shagged Me, ocena: 0.9681013094861783
+# Film: Sin City, ocena: 0.8394283325362564
+# Film: Mrs. Doubtfire, ocena: 0.836297642176647
+# Film: Indiana Jones and the Last Crusade, ocena: 0.8318333017071369
+# Film: Speed, ocena: 0.8045875158317601
+# Film: Good Will Hunting, ocena: 0.7890629128627
+# Film: The Silence of the Lambs, ocena: 0.7208267064614353
+# Film: The Lord of the Rings: The Fellowship of the Ring, ocena: 0.6847876754223341
+# Film: The Fifth Element, ocena: 0.6540223951172395
+# Film: Star Wars: Episode I - The Phantom Menace, ocena: 0.46675515098110365
+# Film: The Incredibles, ocena: 0.417184894673861

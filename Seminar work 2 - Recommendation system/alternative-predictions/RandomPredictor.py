@@ -45,3 +45,12 @@ if __name__ == "__main__":
              "0060973129", "0374157065", "0393045218"]
     for item in items:
         print("Knjiga: {}, ocena: {}".format(md.get_title(item), pred[item]))
+
+# Results:
+#
+# 270170
+# Knjiga: Classical Mythology, ocena: 2
+# Knjiga: Clara Callan, ocena: 7
+# Knjiga: Decision in Normandy, ocena: 4
+# Knjiga: Flu: The Story of the Great Influenza Pandemic of 1918 and the Search for the Virus That Caused It, ocena: 8
+# Knjiga: The Mummies of Urumchi, ocena: 8

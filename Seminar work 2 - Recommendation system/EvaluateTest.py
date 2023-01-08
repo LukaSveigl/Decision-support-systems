@@ -19,3 +19,6 @@ if __name__ == "__main__":
 
     mse, mae, precision, recall, f = rec.evaluate(uim_test, 20)
     print(mse, mae, precision, recall, f)
+
+# Results:
+# 0.7065098717975733 0.6513553464784543 0.10420677468141391 0.12771263566309285 0.11476850366896123
